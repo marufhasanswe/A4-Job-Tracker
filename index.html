@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Tracker</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    </style>
+  </head>
+  <body class="max-w-[1110px] mx-auto bg-[#F8FAFC]">
+    <header class="border-b-2 border-b-[#E6E7E9] pb-7">
+        <h1 class="text-4xl font-bold pt-14 pb-4">Job Application Tracker</h1>
+        <div class="dashboard-container grid grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-lg ">
+                <p class="font-medium text-[#323B49] pb-2">Total</p>
+                <h3 class="text-4xl font-bold">8</h3>
+            </div>
+            <div class="bg-white p-5 rounded-lg">
+                <p class="font-medium text-[#323B49] pb-2">Interview</p>
+                <h3 class="text-4xl font-bold text-green-500">0</h3>
+            </div>
+            <div class="bg-white p-5 rounded-lg">
+                <p class="font-medium text-[#323B49] pb-2">Rejected</p>
+                <h3 class="text-4xl font-bold text-red-500">0</h3>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="flex justify-between items-center pt-7 pb-6">
+            <h3 class="text-2xl font-bold">Available Jobs</h3>
+            <p class="text-gray-500 text-lg"><span>8</span> jobs</p>
+        </div>
+
+        <div class="">
+            <button class="px-6 py-2 rounded font-semibold bg-blue-500 text-white text-sm border border-blue-600 ">All</button>
+            <button class="px-6 py-2 rounded font-medium bg-white-500 text-gray-500 text-sm border border-gray-200 ">Interview</button>
+            <button class="px-6 py-2 rounded font-medium bg-white-500 text-gray-500 text-sm border border-gray-200 ">Rejected</button>
+        </div>
+    </main>
+  </body>
+</html>
