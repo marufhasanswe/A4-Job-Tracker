@@ -1,9 +1,11 @@
 let interviewList = [];
 let rejectedList = [];
+let currentStatus = 'all';
 
 let totalCount = document.getElementById('total');
 let interviewCount = document.getElementById('interview');
 let rejectedCount = document.getElementById('rejected');
+let jobsCount = document.getElementById('jobs-count');
 
 const allFilterBtn = document.getElementById('all-filter-btn');
 const interviewFilterBtn = document.getElementById('interview-filter-btn');
@@ -31,6 +33,7 @@ function toggleStyle(id){
     rejectedFilterBtn.classList.add("bg-white-500", "text-gray-500", "border-gray-200")
 
     document.getElementById(id).classList.add('bg-blue-500', 'text-white', 'border-blue-600','font-semibold');
+    currentStatus = id;
 }
 
 mainContainer.addEventListener('click', function(event){
@@ -43,7 +46,6 @@ mainContainer.addEventListener('click', function(event){
     let status = parentNode.querySelector('#status');
     const jobDescription = parentNode.querySelector('#job-description').innerText;
     
-
     let cardInfo = {
         companyName,
         designation, 
@@ -63,30 +65,37 @@ mainContainer.addEventListener('click', function(event){
         }
     }
     else if(event.target.classList.contains('rejected-btn')){
+
+        interviewList = interviewList.filter(item => item.companyName != cardInfo.companyName);
+        if(currentStatus == "interview-filter-btn"){
+            renderInterview();
+        }
         if(!rejectedExist){
             rejectedList.push(cardInfo);
-            status.innerText = "REJECTED"
+            status.innerText = "REJECTED";
         }
     }
-
     if(event.target.classList.contains('all-filter-btn')){
         interviewFilterSection.classList.add('hidden');
         rejectedFilterSection.classList.add('hidden');
         allCards.classList.remove('hidden');
+        jobsCount.innerText = totalCount.innerText;
     }
     if(event.target.classList.contains('interview-filter-btn')){
         interviewFilterSection.classList.remove('hidden');
         allCards.classList.add('hidden');
         rejectedFilterSection.classList.add('hidden');
+        jobsCount.innerText = interviewCount.innerText;
         renderInterview()
     }
     if(event.target.classList.contains('rejected-filter-btn')){
         interviewFilterSection.classList.add('hidden');
         allCards.classList.add('hidden');
         rejectedFilterSection.classList.remove('hidden');
+        jobsCount.innerText = rejectedCount.innerText;
         renderRejected();
     }
-
+    
 calculateCount()
     
 })
@@ -123,12 +132,12 @@ function renderInterview(){
             </p>
             <div class="flex gap-2">
               <button
-                class="text-[#10B981] border border-[#10B981] px-3 py-2 font-semibold text-sm rounded cursor-pointer"
+                class="interview-btn text-[#10B981] border border-[#10B981] px-3 py-2 font-semibold text-sm rounded cursor-pointer"
               >
                 INTERVIEW
               </button>
               <button
-                class="text-[#EF4444] border border-[#EF4444] px-3 py-2 font-semibold text-sm rounded cursor-pointer"
+                class="rejected-btn text-[#EF4444] border border-[#EF4444] px-3 py-2 font-semibold text-sm rounded cursor-pointer"
               >
                 REJECTED
               </button>
