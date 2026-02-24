@@ -18,8 +18,6 @@ let rejectedFilterSection = document.getElementById('rejected-filter-section');
 let interviewNoJobsAvailable = document.getElementById('interview-no-jobs-available');
 let rejectedNoJobsAvailable = document.getElementById('rejected-no-jobs-available');
 
-console.log(currentStatus);
-
 function calculateCount(){
     totalCount.innerText = allCards.children.length;
     interviewCount.innerText = interviewList.length;
@@ -53,19 +51,19 @@ function toggleStyle(id){
 
 mainContainer.addEventListener('click', function(event){
     const parentNode = event.target.parentNode.parentNode;
-    const companyName = parentNode.querySelector('#company-name');
-    const designation = parentNode.querySelector('#designation');
-    const location = parentNode.querySelector('#location');
-    const type = parentNode.querySelector('#type');
-    const salary = parentNode.querySelector('#salary');
-    let status = parentNode.querySelector('#status');
-    const jobDescription = parentNode.querySelector('#job-description');
+    const companyName = parentNode.querySelector('.company-name');
+    const designation = parentNode.querySelector('.designation');
+    const location = parentNode.querySelector('.location');
+    const type = parentNode.querySelector('.type');
+    const salary = parentNode.querySelector('.salary');
+    let status = parentNode.querySelector('.status');
+    const jobDescription = parentNode.querySelector('.job-description');
     
     if(event.target.classList.contains("delete-btn")){
         const removeElement = event.target.parentNode.parentNode;
-        const companyName = removeElement.querySelector('#company-name').innerText;
-        interviewList = interviewList.filter(item => item.companyName !== companyName);
-        rejectedList = rejectedList.filter(item => item.companyName !== companyName);
+        const removeCompanyName = removeElement.querySelector('.company-name').innerText;
+        interviewList = interviewList.filter(item => item.companyName !== removeCompanyName);
+        rejectedList = rejectedList.filter(item => item.companyName !== removeCompanyName);
         removeElement.remove();
         if(currentStatus === "interview-filter-btn"){
             renderInterview();
@@ -139,25 +137,25 @@ function renderInterview(){
         div.innerHTML = `
             <div class="card p-6 bg-white flex justify-between rounded-lg">
           <div>
-            <h3 id="company-name" class="text-2xl font-semibold text-[#002C5C]">
+            <h3 class="company-name text-2xl font-semibold text-[#002C5C]">
               ${interview.companyName}
             </h3>
-            <p id="designation" class="text-[#64748B] mt-1">
+            <p class="designation text-[#64748B] mt-1">
               ${interview.designation}
             </p>
             <div
               class="text-[#64748B] mt-5 mb-5 text-sm flex items-center gap-2"
             >
-              <p id="location">${interview.location}</p>
+              <p class="location">${interview.location}</p>
               <p class="w-1 h-1 bg-[#64748B] rounded-full"></p>
-              <p id="type">${interview.type}</p>
+              <p class="type">${interview.type}</p>
               <p class="w-1 h-1 bg-[#64748B] rounded-full"></p>
-              <p id="salary">${interview.salary}</p>
+              <p class="salary">${interview.salary}</p>
             </div>
-            <button id="status" class="text-[#002C5C] px-3 py-2 bg-[#EEF4FF] rounded">
+            <button class="status" class="text-[#002C5C] px-3 py-2 bg-[#EEF4FF] rounded">
               INTERVIEW
             </button>
-            <p id="job-description" class="text-[#323B49] mt-2 mb-5 text-sm">
+            <p class="job-description text-[#323B49] mt-2 mb-5 text-sm">
               ${interview.jobDescription}
             </p>
             <div class="flex gap-2">
@@ -196,25 +194,25 @@ function renderRejected(){
         div.innerHTML = `
             <div class="card p-6 bg-white flex justify-between rounded-lg">
           <div>
-            <h3 id="company-name" class="text-2xl font-semibold text-[#002C5C]">
+            <h3 class="company-name text-2xl font-semibold text-[#002C5C]">
               ${rejected.companyName}
             </h3>
-            <p id="designation" class="text-[#64748B] mt-1">
+            <p class="designation text-[#64748B] mt-1">
               ${rejected.designation}
             </p>
             <div
               class="text-[#64748B] mt-5 mb-5 text-sm flex items-center gap-2"
             >
-              <p id="location">${rejected.location}</p>
+              <p class="location">${rejected.location}</p>
               <p class="w-1 h-1 bg-[#64748B] rounded-full"></p>
-              <p id="type">${rejected.type}</p>
+              <p class="type">${rejected.type}</p>
               <p class="w-1 h-1 bg-[#64748B] rounded-full"></p>
-              <p id="salary">${rejected.salary}</p>
+              <p class="salary">${rejected.salary}</p>
             </div>
-            <button id="status" class="text-[#002C5C] px-3 py-2 bg-[#EEF4FF] rounded">
+            <button class="status" class="text-[#002C5C] px-3 py-2 bg-[#EEF4FF] rounded">
               REJECTED
             </button>
-            <p id="job-description" class="text-[#323B49] mt-2 mb-5 text-sm">
+            <p class="job-description text-[#323B49] mt-2 mb-5 text-sm">
               ${rejected.jobDescription}
             </p>
             <div class="flex gap-2">
