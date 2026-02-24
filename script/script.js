@@ -1,6 +1,6 @@
 let interviewList = [];
 let rejectedList = [];
-let currentStatus = 'all';
+let currentStatus = 'all-filter-btn';
 
 let totalCount = document.getElementById('total');
 let interviewCount = document.getElementById('interview');
@@ -18,15 +18,27 @@ let rejectedFilterSection = document.getElementById('rejected-filter-section');
 let interviewNoJobsAvailable = document.getElementById('interview-no-jobs-available');
 let rejectedNoJobsAvailable = document.getElementById('rejected-no-jobs-available');
 
+console.log(currentStatus);
 
 function calculateCount(){
     totalCount.innerText = allCards.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
+    if(currentStatus=="all-filter-btn"){
+        jobsCount.innerText = totalCount.innerText;
+    }
+    if(currentStatus=="interview-filter-btn"){
+        jobsCount.innerText = interviewCount.innerText;
+    }
+    if(currentStatus=="rejected-filter-btn"){
+        jobsCount.innerText = rejectedCount.innerText;
+    }
 }
 calculateCount()
 
 function toggleStyle(id){
+    
+    currentStatus = id;
     allFilterBtn.classList.remove('bg-blue-500', 'text-white', 'border-blue-600', "font-semibold")
     interviewFilterBtn.classList.remove('bg-blue-500', 'text-white', 'border-blue-600', "font-semibold")
     rejectedFilterBtn.classList.remove('bg-blue-500', 'text-white', 'border-blue-600', "font-semibold")
@@ -36,26 +48,41 @@ function toggleStyle(id){
     rejectedFilterBtn.classList.add("bg-white-500", "text-gray-500", "border-gray-200")
 
     document.getElementById(id).classList.add('bg-blue-500', 'text-white', 'border-blue-600','font-semibold');
-    currentStatus = id;
+    
 }
 
 mainContainer.addEventListener('click', function(event){
     const parentNode = event.target.parentNode.parentNode;
-    const companyName = parentNode.querySelector('#company-name').innerText;
-    const designation = parentNode.querySelector('#designation').innerText;
-    const location = parentNode.querySelector('#location').innerText;
-    const type = parentNode.querySelector('#type').innerText;
-    const salary = parentNode.querySelector('#salary').innerText;
+    const companyName = parentNode.querySelector('#company-name');
+    const designation = parentNode.querySelector('#designation');
+    const location = parentNode.querySelector('#location');
+    const type = parentNode.querySelector('#type');
+    const salary = parentNode.querySelector('#salary');
     let status = parentNode.querySelector('#status');
-    const jobDescription = parentNode.querySelector('#job-description').innerText;
+    const jobDescription = parentNode.querySelector('#job-description');
     
+    if(event.target.classList.contains("delete-btn")){
+        const removeElement = event.target.parentNode.parentNode;
+        const companyName = removeElement.querySelector('#company-name').innerText;
+        interviewList = interviewList.filter(item => item.companyName !== companyName);
+        rejectedList = rejectedList.filter(item => item.companyName !== companyName);
+        removeElement.remove();
+        if(currentStatus === "interview-filter-btn"){
+            renderInterview();
+        }
+        if(currentStatus === "rejected-filter-btn"){
+            renderRejected();
+        }
+        calculateCount();
+    }
+
     let cardInfo = {
-        companyName,
-        designation, 
-        location, 
-        type, 
-        salary,
-        jobDescription
+        companyName : companyName.innerText,
+        designation : designation.innerText, 
+        location : location.innerText, 
+        type : type.innerText, 
+        salary : salary.innerText,
+        jobDescription: jobDescription.innerText
     };
 
     const interviewExist = interviewList.find(item => item.companyName == cardInfo.companyName)
@@ -77,7 +104,7 @@ mainContainer.addEventListener('click', function(event){
             rejectedList.push(cardInfo);
         }
         status.innerText = "REJECTED";
-        if(currentStatus == "interview-filter-btn"){
+        if(currentStatus == "interview-filter-btn"){    
             renderInterview();
         }
     }
@@ -85,14 +112,12 @@ mainContainer.addEventListener('click', function(event){
         interviewFilterSection.classList.add('hidden');
         rejectedFilterSection.classList.add('hidden');
         allCards.classList.remove('hidden');
-        jobsCount.innerText = totalCount.innerText;
     }
     if(event.target.classList.contains('interview-filter-btn')){
         interviewFilterSection.classList.remove('hidden');
         allCards.classList.add('hidden');
         rejectedFilterSection.classList.add('hidden');
-        jobsCount.innerText = interviewCount.innerText;
-        renderInterview()
+        renderInterview();
     }
     if(event.target.classList.contains('rejected-filter-btn')){
         interviewFilterSection.classList.add('hidden');
@@ -101,8 +126,6 @@ mainContainer.addEventListener('click', function(event){
         jobsCount.innerText = rejectedCount.innerText;
         renderRejected();
     }
-    console.log(event.target.parentNode.parentNode);
-    
 calculateCount()
     
 })
@@ -151,11 +174,11 @@ function renderInterview(){
             </div>
           </div>
           <div>
-            <button
-              class="w-8 h-8 rounded-full border border-[#323B49] text-gray-500 cursor-pointer"
-            >
-              <i class="fa-regular fa-trash-can"></i>
-            </button>
+            <img
+              class="delete-btn w-8 p-[5px] flex items-center justify-center self-center rounded-full border border-[#323B49] text-gray-500 cursor-pointer"
+              src="Images/Trash.png"
+              alt=""
+            />
           </div>
         </div>
         `
@@ -208,18 +231,19 @@ function renderRejected(){
             </div>
           </div>
           <div>
-            <button
-              class="w-8 h-8 rounded-full border border-[#323B49] text-gray-500 cursor-pointer"
-            >
-              <i class="fa-regular fa-trash-can"></i>
-            </button>
+            <img
+              class="delete-btn w-8 p-[5px] flex items-center justify-center self-center rounded-full border border-[#323B49] text-gray-500 cursor-pointer"
+              src="Images/Trash.png"
+              alt=""
+            />
           </div>
         </div>
         `
-        
         rejectedFilterSection.appendChild(div);
     }
 
 }
+
+
 
 
